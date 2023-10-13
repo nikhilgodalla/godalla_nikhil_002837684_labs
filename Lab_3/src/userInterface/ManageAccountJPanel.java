@@ -206,7 +206,8 @@ public class ManageAccountJPanel extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
-        Account result = accountDirectory.searchAccount(txtAccountNumber.getText());
+        try{
+        Account result = accountDirectory.searchAccount(Integer.parseInt(txtAccountNumber.getText()));
         if(result==null){
             JOptionPane.showMessageDialog(null,"account number that you entered doesnot exist", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -217,7 +218,10 @@ public class ManageAccountJPanel extends javax.swing.JPanel {
              layout.next(userProcessContainer);
             
         }
-            
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Incorrect Input Format");
+        }
             
     }//GEN-LAST:event_btnSearchActionPerformed
 

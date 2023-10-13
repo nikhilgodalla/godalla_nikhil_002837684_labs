@@ -32,8 +32,8 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
         
     }
     private void populateAccountDetails(){
-        txtRoutingNumber.setText(account.getRoutingNumber());
-        txtAccountNumber.setText(account.getAccountNumber());
+        txtRoutingNumber.setText(String.valueOf(account.getRoutingNumber()));
+        txtAccountNumber.setText(String.valueOf(account.getAccountNumber()));
         txtBankName.setText(account.getBankName());
         
     }
@@ -193,18 +193,30 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:\
-        account.setRoutingNumber(txtRoutingNumber.getText());
-        account.setAccountNumber(txtAccountNumber.getText());
+        try{
+        account.setRoutingNumber(Integer.parseInt(txtRoutingNumber.getText()));
+        account.setAccountNumber(Integer.parseInt(txtAccountNumber.getText()));
         account.setBankName(txtBankName.getText());
-        
+        if(containsCharacters(txtBankName.getText()))
+            throw new ArithmeticException("");
+       
         
         btnSave.setEnabled(false);
         btnUpdate.setEnabled(true);
         JOptionPane.showConfirmDialog(null, "Account has been saved successfully");
-        
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Incorrect Input Format");
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
-
+    private boolean containsCharacters(String bankName) {
+        for(char c:bankName.toCharArray()){
+            if(!Character.isLetter(c) && !Character.isWhitespace(c))
+                return true;
+        }
+        return false;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IblHeader;
     private javax.swing.JButton btnBack;

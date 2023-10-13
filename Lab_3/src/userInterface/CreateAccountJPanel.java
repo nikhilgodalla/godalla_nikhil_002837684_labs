@@ -21,16 +21,12 @@ public class CreateAccountJPanel extends javax.swing.JPanel {
      */
     private  JPanel userProcessContainer;
     private  AccountDirectory accountDirectory;
-    public CreateAccountJPanel() {
-        initComponents();
-        
-    }
+   
 
-    CreateAccountJPanel(JPanel userProcessContainer, AccountDirectory accountDirectory) {
+     CreateAccountJPanel(JPanel userProcessContainer, AccountDirectory accountDirectory) {
         initComponents();
          this.userProcessContainer = userProcessContainer;
         this.accountDirectory = accountDirectory;
-        
     }
 
     /**
@@ -163,19 +159,29 @@ public class CreateAccountJPanel extends javax.swing.JPanel {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
-        String routingNumber = txtRoutingNumber.getText();
-        String accountNumber = txtAccountNumber.getText();
+        try{
+        int routingNumber = Integer.parseInt(txtRoutingNumber.getText());
+        int accountNumber = Integer.parseInt(txtAccountNumber.getText());
         String bankName = txtBankName.getText();
         int balance = Integer.parseInt(txtBalance.getText());
-        
+        if(containsCharacters(bankName))
+            throw new ArithmeticException("");
+       
         Account account = accountDirectory.addAccount();
         account.setRoutingNumber(routingNumber);
         account.setAccountNumber(accountNumber);
         account.setBankName(bankName);
         account.setBalance(balance);
         
+        JOptionPane.showMessageDialog(null, "Account successfully created");
         
-        JOptionPane.showMessageDialog(null,"Account successfully created!");
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Incorrect Input Format");
+        }
+        
+        
+        
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -200,4 +206,12 @@ public class CreateAccountJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtBankName;
     private javax.swing.JTextField txtRoutingNumber;
     // End of variables declaration//GEN-END:variables
+
+    private boolean containsCharacters(String bankName) {
+        for(char c:bankName.toCharArray()){
+            if(!Character.isLetter(c) && !Character.isWhitespace(c))
+                return true;
+        }
+        return false;
+    }
 }
